@@ -1,0 +1,14 @@
+[Unit]
+Description=ASP.NET Web API Application running on Ubuntu
+
+[Service]
+WorkingDirectory=<PROJECT_PATH>
+ExecStart=/usr/bin/dotnet <PROJECT_PATH>/WebApiServer.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=mpgp-api
+User=<USER_NAME>
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install]
+WantedBy=multi-user.target
