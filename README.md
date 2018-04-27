@@ -2,16 +2,16 @@
 
 ![https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Devops-toolchain.svg/220px-Devops-toolchain.svg.png](https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Devops-toolchain.svg/220px-Devops-toolchain.svg.png)
 
-## Configure nginx
-1. Replace <SERVER_NAME> to your_hostname.com in nginx/*.conf files
-2. Execute shell:
-```bash
-(cd nginx && ./run.sh)
+## Configure
+```sh
+sudo echo "127.0.0.1 mpgpnginx" >> /etc/hosts
+sudo echo "127.0.0.1 mpgpbrowserclient" >> /etc/hosts
+sudo echo "127.0.0.1 mpgprestapiserver" >> /etc/hosts
+sudo echo "127.0.0.1 mpgpwebsocketserver" >> /etc/hosts
 ```
 
-## Create daemons
-1. Replace <PROJECT_PATH> and <USER_NAME> in systemd/*.service files
-2. Execite shell:
-```bash
-(cd systemd && ./run.sh)
-```
+---
+
+## Choose your destiny
+- [docker way](docker)
+- [nondocker](nondocker)

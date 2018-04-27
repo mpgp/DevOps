@@ -1,0 +1,14 @@
+[Unit]
+Description=ASP.NET WebSocket Application
+
+[Service]
+WorkingDirectory=/home/agent4mpgp/mpgp/src/Mpgp.WebSocketServer/bin/release/netcoreapp2.0/publish
+ExecStart=/usr/bin/dotnet /home/agent4mpgp/mpgp/src/Mpgp.WebSocketServer/bin/release/netcoreapp2.0/publish/Mpgp.WebSocketServer.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=mpgpwebsocketserver
+User=<USER_NAME>
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install]
+WantedBy=multi-user.target

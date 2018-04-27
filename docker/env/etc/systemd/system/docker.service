@@ -1,0 +1,10 @@
+[Unit]
+Description=DockerDaemonService
+
+[Service]
+ExecStart=/usr/bin/dockerd
+SyslogIdentifier=dockerdaemonservice
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -2,12 +2,12 @@
 
 PROJECT=${1:-WebSocketBrowserClient}
 
-API_SERVER_PROJECT_DIR="/home/agent4mpgp/mpgp/WebApiServer/WebApiServer"
+API_SERVER_PROJECT_DIR="/home/agent4mpgp/mpgp/src/Mpgp.RestApiServer"
 
-BROWSER_CLIENT_OUTPUT_DIR="/home/agent4mpgp/mpgp/WebApiServer/WebApiServer/wwwroot"
-BROWSER_CLIENT_PROJECT_DIR="/home/agent4mpgp/mpgp/WebSocketBrowserClient"
+BROWSER_CLIENT_OUTPUT_DIR="/home/agent4mpgp/mpgp/src/Mpgp.RestApiServer/wwwroot"
+BROWSER_CLIENT_PROJECT_DIR="/home/agent4mpgp/BrowserClient"
 
-SOCKET_SERVER_PROJECT_DIR="/home/agent4mpgp/mpgp/WebSocketServer/WebSocketServer"
+SOCKET_SERVER_PROJECT_DIR="/home/agent4mpgp/mpgp/src/Mpgp.WebSocketServer"
 
 function rebuildWebApiServer {
     sudo systemctl stop mpgp-api.service

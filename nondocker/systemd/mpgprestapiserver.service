@@ -1,0 +1,14 @@
+[Unit]
+Description=ASP.NET Web API Application
+
+[Service]
+WorkingDirectory=/home/agent4mpgp/mpgp/src/Mpgp.RestApiServer/bin/release/netcoreapp2.0/publish
+ExecStart=/usr/bin/dotnet /home/agent4mpgp/mpgp/src/Mpgp.RestApiServer/bin/release/netcoreapp2.0/publish/Mpgp.RestApiServer.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=mpgprestapiserver
+User=agent4mpgp
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install]
+WantedBy=multi-user.target

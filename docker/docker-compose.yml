@@ -1,0 +1,95 @@
+version: '2.1'
+
+services:
+    mpgpnginx:
+        links:
+            - mpgpfrontendbuilder
+            - mpgpbackendbuilder
+            - mpgprestapiserver
+            - mpgpwebsocketserver
+        depends_on:
+            - mpgpfrontendbuilder
+            - mpgpbackendbuilder
+            - mpgprestapiserver
+            - mpgpwebsocketserver
+        build:
+            context: ./images
+            dockerfile: Dockerfile-Nginx
+            args:
+                buildno: 1
+        hostname: mpgpnginx
+        container_name: mpgpnginx
+        expose:
+        - 8080
+        ports:
+            - 8080:8080
+        environment:
+            - APP_ENV=local
+            - VIRTUAL_HOST=mpgpnginx
+        labels:
+            - SERVICE_NAME=mpgpnginx
+        volumes:
+            - ../nginx:/etc/nginx/sites-available
+        command: /bin/bash -c "cp -rf /etc/nginx/sites-available/* /etc/nginx/conf.d && 
+            ln -sf /etc/nginx/sites-available/mpgpnginx.conf /etc/nginx/sites-enabled/mpgpnginx.conf && 
+            ln -sf /etc/nginx/sites-available/mpgprestapiserver.conf /etc/nginx/sites-enabled/mpgprestapiserver.conf &&
+            ln -sf /etc/nginx/sites-available/mpgpwebsocketserver.conf /etc/nginx/sites-enabled/mpgpwebsocketserver.conf &&
+            rm /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+    mpgpfrontendbuilder:
+        build:
+            context: ./images
+            dockerfile: Dockerfile-MpgpFrontendBuilder
+            args:
+                buildno: 1
+        hostname: mpgpfrontendbuilder
+        container_name: mpgpfrontendbuilder
+        labels:
+            - SERVICE_NAME=mpgpfrontendbuilder
+
+    mpgpbackendbuilder:
+        build:
+            context: ./images
+            dockerfile: Dockerfile-MpgpBackendBuilder
+            args:
+                buildno: 1
+        hostname: mpgpbackendbuilder
+        container_name: mpgpbackendbuilder
+        labels:
+            - SERVICE_NAME=mpgpbackendbuilder
+
+    mpgprestapiserver:
+        links:
+            - mpgpbackendbuilder
+        depends_on:
+            - mpgpbackendbuilder
+        build:
+            context: ./images
+            dockerfile: Dockerfile-RestApiServer
+            args:
+                buildno: 1
+        hostname: mpgprestapiserver
+        container_name: mpgprestapiserver
+        environment:
+            - APP_ENV=local
+            - VIRTUAL_HOST=mpgprestapiserver
+        labels:
+            - SERVICE_NAME=mpgprestapiserver
+
+    mpgpwebsocketserver:
+        links:
+            - mpgpbackendbuilder
+        depends_on:
+            - mpgpbackendbuilder
+        build:
+            context: ./images
+            dockerfile: Dockerfile-WebSocketServer
+            args:
+                buildno: 1
+        hostname: mpgpwebsocketserver
+        container_name: mpgpwebsocketserver
+        environment:
+            - APP_ENV=local
+            - VIRTUAL_HOST=mpgpwebsocketserver
+        labels:
+            - SERVICE_NAME=mpgpwebsocketserver
