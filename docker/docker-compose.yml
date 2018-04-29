@@ -14,7 +14,7 @@ services:
             - mpgpwebsocketserver
         build:
             context: ./images
-            dockerfile: Dockerfile-Nginx
+            dockerfile: Nginx.Dockerfile
             args:
                 buildno: 1
         hostname: mpgpnginx
@@ -34,12 +34,12 @@ services:
             ln -sf /etc/nginx/sites-available/mpgpnginx.conf /etc/nginx/sites-enabled/mpgpnginx.conf && 
             ln -sf /etc/nginx/sites-available/mpgprestapiserver.conf /etc/nginx/sites-enabled/mpgprestapiserver.conf &&
             ln -sf /etc/nginx/sites-available/mpgpwebsocketserver.conf /etc/nginx/sites-enabled/mpgpwebsocketserver.conf &&
-            rm /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+            (rm -f /etc/nginx/conf.d/default.conf  2> /dev/null || echo > /dev/null) && nginx -g 'daemon off;'"
 
     mpgpfrontendbuilder:
         build:
             context: ./images
-            dockerfile: Dockerfile-MpgpFrontendBuilder
+            dockerfile: MpgpFrontendBuilder.Dockerfile
             args:
                 buildno: 1
         hostname: mpgpfrontendbuilder
@@ -50,7 +50,7 @@ services:
     mpgpbackendbuilder:
         build:
             context: ./images
-            dockerfile: Dockerfile-MpgpBackendBuilder
+            dockerfile: MpgpBackendBuilder.Dockerfile
             args:
                 buildno: 1
         hostname: mpgpbackendbuilder
@@ -58,14 +58,35 @@ services:
         labels:
             - SERVICE_NAME=mpgpbackendbuilder
 
-    mpgprestapiserver:
+    mpgppostgres:
+        environment:
+            - POSTGRES_DB=mpgp
+            - POSTGRES_USER=agent4mpgp
+            - POSTGRES_PASSWORD=v3ry23C93tp422w0Rd
         links:
             - mpgpbackendbuilder
         depends_on:
             - mpgpbackendbuilder
         build:
             context: ./images
-            dockerfile: Dockerfile-RestApiServer
+            dockerfile: Postgres.Dockerfile
+            args:
+                buildno: 1
+        hostname: mpgppostgres
+        container_name: mpgppostgres
+        labels:
+            - SERVICE_NAME=mpgppostgres
+
+    mpgprestapiserver:
+        links:
+            - mpgpbackendbuilder
+            - mpgppostgres
+        depends_on:
+            - mpgpbackendbuilder
+            - mpgppostgres
+        build:
+            context: ./images
+            dockerfile: RestApiServer.Dockerfile
             args:
                 buildno: 1
         hostname: mpgprestapiserver
@@ -79,11 +100,13 @@ services:
     mpgpwebsocketserver:
         links:
             - mpgpbackendbuilder
+            - mpgppostgres
         depends_on:
             - mpgpbackendbuilder
+            - mpgppostgres
         build:
             context: ./images
-            dockerfile: Dockerfile-WebSocketServer
+            dockerfile: WebSocketServer.Dockerfile
             args:
                 buildno: 1
         hostname: mpgpwebsocketserver
