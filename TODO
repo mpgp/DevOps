@@ -1,0 +1,48 @@
+--------------------------------------------------------------------
+-----------------------   DevOps   ---------------------------------
+--------------------------------------------------------------------
+docker-compose up --force-recreate --build
+
+docker build-args
+ARG PHP_ENVENV APP_ENV=${PHP_ENV:-development}
+
+RabbitMQ WS Listeners
+
+api captcha
+
+[SECURITY]: request filtering
+
+iptables
+
+block microDDos Nginx || nginx limit_req 
+
+memcached dudoser 5 times then 403
+
+
+elastiksearchkebana?
+
+webmorda for logs view.
+--------------------------------------------------------------------
+-----------------------   BrowserClient   --------------------------
+--------------------------------------------------------------------
+```JavaScript
+class MyApplicationRef extends ApplicationRef {
+    tick() {}
+}
+```
+`{provide: applicationref, useClass: MyApplicationRef}`
+
+@Observer
+
+
+changeDetection: ChangeDetectionStrategy.OnPush
+
+
+architecture
+https://blog.angular-university.io/angular-2-smart-components-vs-presentation-components-whats-the-difference-when-to-use-each-and-why/
+
+https://habrahabr.ru/post/348818/#s1_1
+
+https://medium.com/@tomastrajan/6-best-practices-pro-tips-for-angular-cli-better-developer-experience-7b328bc9db81
+
+https://habrahabr.ru/post/320414/
