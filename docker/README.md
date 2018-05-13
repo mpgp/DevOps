@@ -9,7 +9,9 @@
 
 ## Configure
 ```bash
-sudo cp -rf ./env/* ./
+sudo cp -rf ./env/* /
+systemctl enable /etc/systemd/system/docker
+systemctl start /etc/systemd/system/docker
 ```
 
 ## Startup
