@@ -5,9 +5,7 @@
 ## Configure
 ```sh
 sudo echo "127.0.0.1 mpgpnginx" >> /etc/hosts
-sudo echo "127.0.0.1 mpgpbrowserclient" >> /etc/hosts
 sudo echo "127.0.0.1 mpgprestapiserver" >> /etc/hosts
-sudo echo "127.0.0.1 mpgpwebsocketserver" >> /etc/hosts
 ```
 
 ---

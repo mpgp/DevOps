@@ -1,6 +1,6 @@
 FROM microsoft/aspnetcore AS mpgprestapiserver
 
-COPY --from=docker_mpgpbackendbuilder mpgpbackendbuilder/src/Mpgp.RestApiServer/bin/release/netcoreapp2.0/publish mpgprestapiserver
+COPY --from=mpgpbackendbuilder mpgpbackendbuilder/src/Mpgp.RestApiServer/bin/release/netcoreapp2.0/publish mpgprestapiserver
 
 WORKDIR mpgprestapiserver
 ENV ASPNETCORE_URLS http://*:5000

@@ -1,0 +1,24 @@
+--------------------------------------------------------------------
+-----------------------   DevOps   ---------------------------------
+--------------------------------------------------------------------
+docker-compose up --force-recreate --build
+
+docker build-args
+ARG PHP_ENVENV APP_ENV=${PHP_ENV:-development}
+
+RabbitMQ WS Listeners
+
+api captcha
+
+[SECURITY]: request filtering
+
+iptables
+
+block microDDos Nginx || nginx limit_req 
+
+memcached dudoser 5 times then 403
+
+
+elastiksearchkebana?
+
+webmorda for logs view.
