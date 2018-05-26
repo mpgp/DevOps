@@ -58,7 +58,7 @@ services:
         labels:
             - SERVICE_NAME=mpgpbackendbuilder
 
-    mpgppostgres:
+    mpgpdb:
         environment:
             - POSTGRES_DB=mpgp
             - POSTGRES_USER=agent4mpgp
@@ -67,24 +67,24 @@ services:
             - mpgpbackendbuilder
         depends_on:
             - mpgpbackendbuilder
-        image: mpgppostgres
+        image: mpgpdb
         build:
             context: ./images
             dockerfile: Postgres.Dockerfile
             args:
                 buildno: 1
-        hostname: mpgppostgres
-        container_name: mpgppostgres
+        hostname: mpgpdb
+        container_name: mpgpdb
         labels:
-            - SERVICE_NAME=mpgppostgres
+            - SERVICE_NAME=mpgpdb
 
     mpgprestapiserver:
         links:
             - mpgpbackendbuilder
-            - mpgppostgres
+            - mpgpdb
         depends_on:
             - mpgpbackendbuilder
-            - mpgppostgres
+            - mpgpdb
         image: mpgprestapiserver
         build:
             context: ./images
